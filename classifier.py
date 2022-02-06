@@ -29,6 +29,15 @@ emoji_lol = r"[8:=;]['`\-]?p+"
 
 
 def preprocess_apply(tweet):
+    """
+    Preprocesses the passed Tweet by replacing emojis, urls, etc.
+
+    Parameters:
+    -----------
+    tweet    : str
+        Tweet to preprocess, as a String.
+    """
+
     tweet = tweet.lower()
     # Replace all URls with '<url>'
     tweet = re.sub(urlPattern, '<url>', tweet)
@@ -54,6 +63,11 @@ def preprocess_apply(tweet):
 
 
 def load_model():
+    """
+    Creates the sentiment model.
+    Returns the model after loading the weights.
+    """
+
     embedding_layer = Embedding(input_dim=60000,
                                 output_dim=100,
                                 input_length=60)
@@ -73,6 +87,16 @@ def load_model():
 
 
 def predict_sentiment(text):
+    """
+    Predicts sentiment on the passed list of texts.
+    The list of text is preprocessed, tokenized and then predicted on.
+
+    Parameters:
+    -----------
+    text    : list
+        List of tweet to predict on.
+    """
+
     if isinstance(text, str):
         text = list(text, )
     processed_text = [preprocess_apply(t) for t in text]
